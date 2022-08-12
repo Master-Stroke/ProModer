@@ -1,3 +1,3 @@
 adminId = 837817771
 
-token = "5375004283:AAHMdwLg81B_DfqZMp46ZDrX5ZzLSIfm_58"
+token = "BOT_TOKEN"
