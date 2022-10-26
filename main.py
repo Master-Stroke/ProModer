@@ -1,5 +1,4 @@
 import time
-import keep_alive
 from aiogram import executor, types
 from aiogram.dispatcher.filters import AdminFilter, IsReplyFilter
 
