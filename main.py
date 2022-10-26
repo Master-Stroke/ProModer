@@ -6,8 +6,6 @@ from config import adminId
 from random import randint
 from misc import bot, dp
 
-keep_alive.keep_alive()
-
 words = ['сука', 'блять', 'хуй', 'педарас', 'пизда', 'говно', 'похуй', 'сука ня', 'suka nya', 'ебать', 'ебаний', 'дебил', 'педик', 'дурак', 'долбаеб']
 
 # Send admin message about bot started
