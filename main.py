@@ -17,10 +17,9 @@ async def send_adm(dp):
 @dp.message_handler(commands=["start"], commands_prefix="!/")
 async def welcome_send_info(message: types.Message):
     await message.answer(f"{message.from_user.full_name}, Привет {message.from_user.full_name}\n"
-                         f"Я бот созданий для модерации чата)\n\n"
+                         f"Я бот созданный для модерации чата)\n\n"
                          f"Команди бота  /commands\n"
                          f"Что то не понял? /help\n"
-                         f"Боти нашей компании /bots\n"
                          f"Поддержка по боту @MasterStroke777")
 
 # info tour
@@ -36,14 +35,15 @@ async def welcome_send_info(message: types.Message):
                          f"/help - Помощь по боту\n"
                          f"/commands - Команди бота\n"
                          f"/me - Мои дание\n"
-                         f"/dont_click_me - Видать мут себе на рандомное число от 1 до 10 минут\n"
+                         f"/dont_click_me - Выдать мут себе на рандомное число от 1 до 10 минут\n"
                          f"/bots - Боти нашей комании\n\n"
                          f"Команди для админов чата:\n\n"
                          f"/ban - Бан пользователя\n"
                          f"/unban - Разбан пользователя\n"
                          f"/kick - Кик пользователя\n"
                          f"/unkick - Разкик пользователя\n"
-                         f"/mute он дает мут на 3 дня также можно указивать времмя мута /mute 1d /mute 1h /mute 1m - Мут пользователя\n"
+                         f"/mute - Мут пользователя\n"
+                         f"/tmute - Временный мут\n"
                          f"/unmute - Размут пользователя\n"
                          f"/del - Удалить собщенния\n"
                          f"/pin - Закрепить собщенния\n"
@@ -53,21 +53,17 @@ async def welcome_send_info(message: types.Message):
 # new chat member
 @dp.message_handler(content_types=["new_chat_members"])
 async def new_chat_member(message: types.Message):
-    await message.reply(f"Привет {message.new_chat_members[0].full_name},\nПожалуста не спамь и не пиши мати в чат!\nМои команди /commands")
+    await message.reply(f"Привет {message.new_chat_members[0].full_name},\nПожалуста не спамь и не пиши маты в чат!\nМои команды /commands")
 
 
 # delete message user leave chat
 @dp.message_handler(content_types=["left_chat_member"])
 async def leave_chat(message: types.Message):
     await message.reply("Пока!")
-    
-@dp.message_handler(commands=["bots"], commands_prefix="!/")
-async def start(message: types.Message):
-    await message.reply("Боти нашей компании:\n@see_weather_city_bot посмотреть погоду в любом городе мира\n@pro_moder_bot Модератор\n@bot_accountant_bot бухгалер бот\n@bot_qr_code_bot Генератор QR Code\n@bot_join_bot Авто прием заявок на вступленния в чат\n@search_photo_cats_bot рандомный поиск фото котов\n@search_photo_dog_bot рандомный поиск фото собак\n@botcaptchabot Генератор капчи\n@programmerchat_bot Модератор для АйТи чатов")
 
-@dp.message_handler(commands = ["reply"])
-async def repl(message: types.Message):
-    await bot.send_message(int(message.text.split()[1]), message.text.replace(message.text.split()[1], "").replace("/reply", ""))
+#@dp.message_handler(commands = ["reply"])
+#async def repl(message: types.Message):
+#    await bot.send_message(int(message.text.split()[1]), message.text.replace(message.text.split()[1], "").replace("/reply", ""))
 
 # user get info about him
 @dp.message_handler(commands=["me"], commands_prefix="!/")
@@ -88,9 +84,9 @@ async def ban(message: types.Message):
     admin_id = message.from_user.id
     await bot.ban_chat_member(chat_id=message.chat.id, user_id=replied_user)    
     if not message.reply_to_message.from_user.username == None:
-        await message.reply(f"Пользователю @{message.reply_to_message.from_user.username} видан бан!\nПричина: {message.text[5:]}")   
+        await message.reply(f"Пользователю @{message.reply_to_message.from_user.username} выдан бан!\nПричина: {message.text[5:]}")   
     if message.reply_to_message.from_user.username == None:
-        await message.reply(f"Пользователю [<code>{message.from_user.id}</code>] <code>{message.from_user.full_name}</code> видан бан!\nПричина: {message.text[5:]}")
+        await message.reply(f"Пользователю [<code>{message.from_user.id}</code>] <code>{message.from_user.full_name}</code> выдан бан!\nПричина: {message.text[5:]}")
 
 @dp.message_handler(commands=['pel'], commands_prefix='!/')
 async def ban(message: types.Message):
@@ -99,7 +95,7 @@ async def ban(message: types.Message):
 @dp.message_handler(AdminFilter(is_chat_admin=True), IsReplyFilter(is_reply=False), commands=['ban'],
                     commands_prefix='!/', chat_type=[types.ChatType.SUPERGROUP, types.ChatType.GROUP])
 async def ban(message: types.Message):
-    await message.reply("Команда должна бить ответом на собщенния!")    
+    await message.reply("Команда должна бить ответом на сообщенния!")
                             
 
 @dp.message_handler(AdminFilter(is_chat_admin=True), IsReplyFilter(is_reply=True), commands=['unban'],
@@ -116,7 +112,7 @@ async def ban(message: types.Message):
 @dp.message_handler(AdminFilter(is_chat_admin=True), IsReplyFilter(is_reply=False), commands=['unban'],
                     commands_prefix='!/', chat_type=[types.ChatType.SUPERGROUP, types.ChatType.GROUP])
 async def ban(message: types.Message):
-    await message.reply("Команда должна бить ответом на собщенния!")                                                         
+    await message.reply("Команда должна быть ответом на сообщенния!")
 
 @dp.message_handler(AdminFilter(is_chat_admin=True), IsReplyFilter(is_reply=True), commands=['kick'],
                     commands_prefix='!/', chat_type=[types.ChatType.SUPERGROUP, types.ChatType.GROUP])
@@ -132,7 +128,7 @@ async def ban(message: types.Message):
 @dp.message_handler(AdminFilter(is_chat_admin=True), IsReplyFilter(is_reply=False), commands=['kick'],
                     commands_prefix='!/', chat_type=[types.ChatType.SUPERGROUP, types.ChatType.GROUP])
 async def ban(message: types.Message):
-    await message.reply("Команда должна бить ответом на собщенния!")          
+    await message.reply("Команда должна бить ответом на сообщенния!")
 
 @dp.message_handler(AdminFilter(is_chat_admin=True), IsReplyFilter(is_reply=True), commands=['unkick'],
                     commands_prefix='!/', chat_type=[types.ChatType.SUPERGROUP, types.ChatType.GROUP])
@@ -251,7 +247,7 @@ async def unmute(message: types.Message):
 @dp.message_handler(AdminFilter(is_chat_admin=True), IsReplyFilter(is_reply=False), commands=['unmute'],
                     commands_prefix='!/', chat_type=[types.ChatType.SUPERGROUP, types.ChatType.GROUP])
 async def ban(message: types.Message):
-    await message.reply("Команда должна бить ответом на собщенния!")                                                                                   
+    await message.reply("Команда должна быть ответом на собщенния!")
 
 # pin chat message
 @dp.message_handler(AdminFilter(is_chat_admin=True), IsReplyFilter(is_reply=True),
@@ -263,7 +259,7 @@ async def pin_message(message: types.Message):
 @dp.message_handler(AdminFilter(is_chat_admin=True), IsReplyFilter(is_reply=False), commands=['pin'],
                     commands_prefix='!/', chat_type=[types.ChatType.SUPERGROUP, types.ChatType.GROUP])
 async def ban(message: types.Message):
-    await message.reply("Команда должна бить ответом на собщенния!")               
+    await message.reply("Команда должна быть ответом на собщенния!")
 
 # unpin chat message
 @dp.message_handler(AdminFilter(is_chat_admin=True), IsReplyFilter(is_reply=True), commands_prefix='!/',
@@ -288,7 +284,7 @@ async def delete_message(message: types.Message):
 @dp.message_handler(AdminFilter(is_chat_admin=True), IsReplyFilter(is_reply=False), commands=['del'],
                     commands_prefix='!/', chat_type=[types.ChatType.SUPERGROUP, types.ChatType.GROUP])
 async def ban(message: types.Message):
-    await message.reply("Команда должна бить ответом на собщенния!")    
+    await message.reply("Команда должна быть ответом на собщенния!")
 # get chat admins list
 @dp.message_handler(chat_type=[types.ChatType.SUPERGROUP, types.ChatType.GROUP], commands=['admins'],
                     commands_prefix='!/')
@@ -311,13 +307,14 @@ async def report_by_user(message: types.Message):
     msg_id = message.reply_to_message.message_id
     user_id = message.from_user.id
     admins_list = [admin.user.id for admin in await bot.get_chat_administrators(chat_id=message.chat.id)]
-    for adm_id in admins_list:
-        try:
-            await bot.send_message(text=f"🆘Жалоба в чате\nПользователь <code>{message.from_user.full_name}</code> [<code>{message.from_user.user.id}</code>] @{message.from_user.username} отправил жалобу на <code>{message.reply_to_message.from_user.username}</code> [<code>{message.reply_to_message.from_user.id}</code>] <code>{message.reply_to_message.from_user.full_name}</code>\nПричина жалоби: {message.text[8:]}",
-                                   chat_id=adm_id, parse_mode=types.ParseMode.MARKDOWN,
+    try:
+      for adm_id in admins_list:
+       await bot.send_message(text=f"🆘Жалоба в чате\nПользователь <code>{message.from_user.full_name}</code> [<code>{message.from_user.id}</code>] @{message.from_user.username} отправил жалобу на <code>{message.reply_to_message.from_user.username}</code> [<code>{message.reply_to_message.from_user.id}</code>] <code>{message.reply_to_message.from_user.full_name}</code>\nПричина жалобы: {message.text[8:]}",
+                                   chat_id=adm_id, parse_mode=types.ParseMode.HTML,
                                    disable_web_page_preview=True)
-        except:
-            pass
+    except:
+        pass
+
     await message.reply(f"Жалоба на пользователя @{message.reply_to_message.from_user.username}\nПричина: {message.text[8:]}\nОтправлено админам!")
 
 
